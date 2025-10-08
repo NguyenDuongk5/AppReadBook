@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_application_1/data/resource.dart';
+import 'package:flutter_application_1/data/resource.dart';
 import 'dart:async';
-import 'package:flutter_application_1/services/home_service.dart';
-import 'package:flutter_application_1/services/localization_service.dart';
+import 'package:flutter_application_1/services/hot_manga_service.dart';
+// import 'package:flutter_application_1/services/localization_service.dart';
 
 class HotManga extends StatefulWidget {
   const HotManga({super.key});
@@ -19,24 +19,36 @@ class _HotMangaState extends State<HotManga> {
   // hiển thị nhiều cột
   final PageController _pageController = PageController(viewportFraction: 0.25);
 
+  /// lưu số trang hiên tại
   int _currentPage = 0;
+
   Timer? _timer;
+
+  /// lưu toàn bộ dữ liệu manga
   var itemAll = [];
 
   @override
-  // Khởi tạo và bắt đầu tự động cuộn
+  /// Khi widget được tạo, sẽ gọi loadData() → lấy dữ liệu từ API (HomeService).
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
+      // load dữ liệu từ API
       await loadData();
+
+      // sau khi load xong thì auto scroll
       _startAutoScroll();
     });
   }
 
+  /// Giả lập tải dữ liệu từ API
   Future<void> loadData() async {
-    // Giả lập tải dữ liệu từ API
+    /// tạo service
     var homeService = HomeService();
+
+    /// gọi API
     var item = await homeService.getHotmanga();
+
+    ///Cập nhật vào itemAll để UI render lại.
     setState(() {
       itemAll = item;
     });
@@ -199,7 +211,7 @@ class _HotMangaState extends State<HotManga> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(12),
                             child: Image.asset(
-                              story.image,
+                              story.mangaImage,
                               width: MediaQuery.of(context).size.width * 0.25,
                               height:
                                   MediaQuery.of(context).size.width *
@@ -214,7 +226,7 @@ class _HotMangaState extends State<HotManga> {
                         Container(
                           width: 120,
                           child: Text(
-                            story.title,
+                            story.mangaTitle,
                             maxLines: 2,
                             // nếu tiêu đề dài quá thì hiện dấu ...
                             overflow: TextOverflow.ellipsis,
@@ -232,7 +244,7 @@ class _HotMangaState extends State<HotManga> {
                         Wrap(
                           spacing: 4,
                           runSpacing: -4,
-                          children: story.categories
+                          children: story.categoryId
                               // Duyệt qua từng thể loại và tạo widget Text
                               .map<Widget>(
                                 (cat) => Text(

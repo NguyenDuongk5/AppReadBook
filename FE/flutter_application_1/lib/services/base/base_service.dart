@@ -1,4 +1,6 @@
+// Dùng để chuyển đổi dữ liệu JSON <-> Map
 import 'dart:convert';
+// Thư viện http để gửi request
 import 'package:http/http.dart' as http;
 
 /// BaseService: lớp cơ sở để thực hiện các yêu cầu HTTP cơ bản (GET, POST, PUT, DELETE)
@@ -7,7 +9,7 @@ import 'package:http/http.dart' as http;
 class BaseService {
   final String baseUrl;
 
-  /// baseUrl: URL gốc của API, ví dụ 'https://api.example.com'
+  /// baseUrl: URL gốc của API, truyền vào khi khởi tạo đối tượng, ví dụ 'https://api.example.com'
   BaseService({required this.baseUrl});
 
   /// =======================
@@ -51,11 +53,12 @@ class BaseService {
     Map<String, String>? headers,
   }) async {
     final response = await http.put(
-      Uri.parse('$baseUrl$endpoint'),
+      //Gửi request GET
+      Uri.parse('$baseUrl$endpoint'), //Ghép baseUrl + endpoint thành Url đầy đủ
       headers: headers ?? {'Content-Type': 'application/json'},
       body: jsonEncode(body),
     );
-    return _processResponse(response);
+    return _processResponse(response); // Xử lý response trả về
   }
 
   /// =======================

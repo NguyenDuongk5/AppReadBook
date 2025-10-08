@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/services/localization_service.dart';
-// import 'package:flutter_application_1/data/resource.dart';
+import 'package:flutter_application_1/data/resource.dart';
 
 class searchBar extends StatelessWidget {
   const searchBar({super.key});

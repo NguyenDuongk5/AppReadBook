@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/data/fake_data.dart';
-import 'package:flutter_application_1/services/localization_service.dart';
 import 'package:flutter_application_1/services/recommended_service.dart';
 import 'package:flutter_application_1/models/recommended_manga.dart';
-// import 'package:flutter_application_1/data/resource.dart' as resource;
-import 'package:flutter_application_1/services/localization_service.dart';
+import 'package:flutter_application_1/data/resource.dart';
 
 class RecommendedList extends StatefulWidget {
   const RecommendedList({super.key});
@@ -239,9 +237,22 @@ class RecommendedListState extends State<RecommendedList> {
               // Hiển thị widget loading hoặc hết dữ liệu
               if (_isLoading) {
                 // đang load dữ liệu
-                return const Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Center(child: CircularProgressIndicator()),
+                return const Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CircularProgressIndicator(
+                        color: Colors.grey,
+                        strokeWidth: 4,
+                        strokeCap: StrokeCap.round,
+                      ),
+                      SizedBox(height: 12),
+                      Text(
+                        'Đang tải dữ liệu...',
+                        style: TextStyle(color: Colors.grey, fontSize: 16),
+                      ),
+                    ],
+                  ),
                 );
               }
               // Nếu đã hết dữ liệu thì hiển thị thông báo

@@ -2,21 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Base\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ReadBookRepo\ReadBookRepo.csproj" />
   </ItemGroup>
-
-	<ItemGroup>
-		<Compile Include="Entity\HotMangaStories\Dto\HotMangaStoriesDto.cs" />
-	</ItemGroup>
 
 
 </Project>

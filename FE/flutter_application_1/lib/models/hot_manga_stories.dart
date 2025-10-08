@@ -1,50 +1,31 @@
-import 'dart:convert';
-
-/// HotMangaStories
-///
-/// Tương ứng với C#:
-/// [Key] public Guid pk_id { get; set; }
-/// public string title { get; set; }
-/// public List<string> categories { get; set; }
-/// public string image { get; set; }
 class HotMangaStories {
-  final String pkId; // Guid từ BE sẽ về dạng String
-  final String title;
-  final List<String> categories;
-  final String image;
+  final String mangaId;
+  final String? mangaTitle;
+  final String? mangaImage;
+  final String categoryId;
 
   HotMangaStories({
-    required this.pkId,
-    required this.title,
-    required this.categories,
-    required this.image,
+    required this.mangaId,
+    this.mangaTitle,
+    this.mangaImage,
+    required this.categoryId,
   });
 
-  /// Parse JSON -> HotMangaStories
   factory HotMangaStories.fromJson(Map<String, dynamic> json) {
     return HotMangaStories(
-      pkId: json['pk_id']?.toString() ?? '',
-      title: json['title']?.toString() ?? '',
-      categories:
-          (json['categories'] as List?)?.map((e) => e.toString()).toList() ??
-          [],
-      image: json['image']?.toString() ?? '',
+      mangaId: json['manga_id'] ?? '',
+      mangaTitle: json['manga_tilte'], // chú ý BE đang để sai chính tả
+      mangaImage: json['manga_image'],
+      categoryId: json['category_id'] ?? '',
     );
   }
 
-  /// HotMangaStories -> JSON
   Map<String, dynamic> toJson() {
     return {
-      'pk_id': pkId,
-      'title': title,
-      'categories': categories,
-      'image': image,
+      'manga_id': mangaId,
+      'manga_tilte': mangaTitle,
+      'manga_image': mangaImage,
+      'category_id': categoryId,
     };
-  }
-
-  /// Tiện dụng: chuyển list object -> list json
-  static List<HotMangaStories> listFromJson(String jsonStr) {
-    final List<dynamic> data = json.decode(jsonStr);
-    return data.map((e) => HotMangaStories.fromJson(e)).toList();
   }
 }

@@ -13,8 +13,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // ✅ Gọi API để tải localization từ backend
-  final localizationService = LocalizationService();
-  await localizationService.fetchAll();
+  // final localizationService = LocalizationService();
+  // await localizationService.fetchAll();
 
   // Sau khi dữ liệu đã tải xong, mới runApp
   runApp(const MyApp());
@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels >=
           _scrollController.position.maxScrollExtent - 200) {
-        // 🔥 Gọi loadMore trong RecommendedList
+        // Gọi loadMore trong RecommendedList
         _recommendedKey.currentState?.loadMore();
       }
     });
@@ -68,22 +68,22 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: [
             // Search bar cố định
-            searchBar(),
+            searchBar(), HotManga(),
 
             // Nội dung cuộn
-            Expanded(
-              child: CustomScrollView(
-                controller: _scrollController,
-                slivers: [
-                  const SliverToBoxAdapter(child: HotManga()),
-                  const SliverToBoxAdapter(child: RankingList()),
-                  const SliverToBoxAdapter(child: SizedBox(height: 20)),
-                  SliverToBoxAdapter(
-                    child: RecommendedList(key: _recommendedKey),
-                  ),
-                ],
-              ),
-            ),
+            // Expanded(
+            //   child: CustomScrollView(
+            //     controller: _scrollController,
+            //     slivers: [
+            //       const SliverToBoxAdapter(child: HotManga()),
+            //       const SliverToBoxAdapter(child: RankingList()),
+            //       const SliverToBoxAdapter(child: SizedBox(height: 20)),
+            //       SliverToBoxAdapter(
+            //         child: RecommendedList(key: _recommendedKey),
+            //       ),
+            //     ],
+            //   ),
+            // ),
           ],
         ),
       ),

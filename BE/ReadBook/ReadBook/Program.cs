@@ -2,15 +2,26 @@
 ///Đăng ký để ASP.NET Core tự inject repo khi cần 
 ///(ví dụ vào controller).
 
-using ReadBookRepo.IRepo.IRankingStoriesRepo;
-using ReadBookRepo.IRepo.IRecommendedMangaRepo;
-using ReadBookRepo.IRepo.Localization;
+using Microsoft.Extensions.DependencyInjection;
+using ReadBookRepo.Base.IRepo;
+using ReadBookRepo.Base.Repo;
+using ReadBookRepo.IRepo.Category;
+using ReadBookRepo.IRepo.Chapters;
+
+
 using ReadBookRepo.Repo;
-using ReadBookRepo.Repo.Localization;
-using ReadBookRepo.Repo.RankingStories;
-using ReadBookRepo.Repo.RecommendedManga;
+using ReadBookRepo.Repo.Category;
+using ReadBookRepo.Repo.Chapters;
+using ReadBookService.Base;
+using ReadBookService.IService.Category;
+using ReadBookService.IService.Chapters;
 using ReadBookService.IService.Home;
-using WedingModel.Service;
+using ReadBookService.Service.Base;
+using ReadBookService.Service.Category;
+using ReadBookService.Service.Chapters;
+using ReadBookService.Service.Home;
+//using Weding.Controllers;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,11 +33,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Đăng ký service với scope ở đây
-builder.Services.AddScoped<IHomeService, HomeService>();
-builder.Services.AddScoped<IHomeRepo, MysqlHomeRepo>();
-builder.Services.AddScoped<IRankingStoriesRepo, MysqlRankingStoriesRepo>();
-builder.Services.AddScoped<IRecommendedMangaRepo, MysqlRecommendedMangaRepo>();
-builder.Services.AddScoped<ILocalizationRepo, MysqlLocalizationRepo>(); 
+builder.Services.AddScoped(typeof(IMySqlBaseRepo<,>), typeof(MySqlBaseRepo<,>));
+builder.Services.AddScoped<IMangaService, MangaService>();
+builder.Services.AddScoped<IChapterService, ChapterService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
+// Đăng ký Repo (fake hoặc MySQL)
+builder.Services.AddScoped<IMangaRepo, MysqlMangaRepo>();
+builder.Services.AddScoped<IChapterRepo, MysqlChapterRepo>();
+builder.Services.AddScoped<ICategoryRepo, MysqlCategoryRepo>();
+builder.Services.AddScoped(typeof(IBaseService<,>), typeof(BaseService<,>));
+
+
+
 
 builder.Services.AddCors(options =>
 {

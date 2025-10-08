@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_application_1/data/resource.dart';
-import 'package:flutter_application_1/services/localization_service.dart';
+import 'package:flutter_application_1/data/resource.dart';
 import 'package:flutter_application_1/models/ranking_stories.dart';
 import 'package:flutter_application_1/services/ranking_service.dart'; // Add this import or correct the path if needed
 
